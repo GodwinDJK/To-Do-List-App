@@ -66,4 +66,23 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
+button.delete-btn {
+    background-color: #d9534f;
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.delete-btn:hover {
+    background-color: #c9302c;
 }
