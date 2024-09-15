@@ -20,7 +20,7 @@ todoForm.addEventListener("submit", function (event) {
 
     // Clear the input field
     todoInput.value = "";
-    
+
 })
 
 //function to create and add task to the list
@@ -37,6 +37,13 @@ function addTaskToList(taskText, isCompleted= false) {
     }
     listItem.appendChild(taskSpan);
 
+    // Create an Edit Button
+    const editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+    editButton.classList.add("edit-btn");
+    listItem.appendChild(editButton);
+
+
     // Create a delete Button
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
@@ -50,6 +57,15 @@ function addTaskToList(taskText, isCompleted= false) {
     taskSpan.addEventListener("click", function(){
         taskSpan.classList.toggle("completed");
         updateTaskInLocalStorage(taskSpan.textContent, taskSpan.classList.contains('completed'));
+    })
+
+    // Add event listener to edit the task when the edit button is clicked
+    editButton.addEventListener("click", function () {
+        const newTaskText= prompt("Edit the task: ", taskSpan.textContent);
+        if (newTaskText !== null && newTaskText.trim() !== "") {
+            taskSpan.textContent = newTaskText;
+            updateTaskInLocalStorage(taskSpan.textContent, taskSpan.classList.contains('completed'));
+        }
     })
 
     // Add event listener to delete the task when delete button is clicked

@@ -69,6 +69,20 @@ li {
     cursor: pointer;
 }
 
+/* Edit button styling */
+button.edit-btn {
+    background-color: #f0ad4e;
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+button.edit-btn:hover {
+    background-color: #ec971f;
+}
+
 .completed {
     text-decoration: line-through;
     color: grey;
