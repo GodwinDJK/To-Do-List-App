@@ -69,6 +69,13 @@ li {
     cursor: pointer;
 }
 
+#category-select {
+    border: 1px solid #ccc;
+    padding: 10px 0;
+    margin: 0px 10px;
+    border-radius: 5px;
+}
+
 /* Edit button styling */
 button.edit-btn {
     background-color: #f0ad4e;

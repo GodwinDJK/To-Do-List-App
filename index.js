@@ -11,12 +11,13 @@ todoForm.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form from refreshing the page
 
     const taskText = todoInput.value;
+    const category = document.getElementById("category-select").value; //Get the selected category
 
     if (taskText === "") return // Check if input is empty
 
-    // Create a new task
-    addTaskToList(taskText);
-    saveTaskToLocalStorage(taskText); // Save the new task to local storage
+    // Create a new task with category
+    addTaskToList(taskText, category);
+    saveTaskToLocalStorage(taskText, category); // Save the new task to local storage
 
     // Clear the input field
     todoInput.value = "";
@@ -24,14 +25,16 @@ todoForm.addEventListener("submit", function (event) {
 })
 
 //function to create and add task to the list
-function addTaskToList(taskText, isCompleted= false) {
+function addTaskToList(taskText, category, isCompleted= false) {
 
     // Create a new List Item element
     const listItem = document.createElement("li");
 
     // Create the Task Text
     const taskSpan = document.createElement("span");
-    taskSpan.textContent = taskText;
+
+    // Show category next to task text
+    taskSpan.textContent = `${taskText} (${category})`; 
     if (isCompleted) {
         taskSpan.classList.add('completed'); // Mark completed if loaded from local storage
     }
@@ -77,9 +80,9 @@ function addTaskToList(taskText, isCompleted= false) {
 }
 
 // Save task to local storage
-function saveTaskToLocalStorage(taskText) {
+function saveTaskToLocalStorage(taskText, category) {
     const tasks = getTasksFromLocalStorage();
-    tasks.push({ text: taskText, completed: false })
+    tasks.push({ text: taskText, category, completed: false });
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
@@ -107,16 +110,16 @@ function updateTaskInLocalStorage(taskText, isCompleted) {
 }
 
 // Remove Task Form Local Storage
-function removeTaskFromLocalStorage(task) {
+function removeTaskFromLocalStorage(taskText) {
     let tasks = getTasksFromLocalStorage();
-    tasks = tasks.filter( task => task.text !== taskText)
+    tasks = tasks.filter( task => task.text !== taskText);
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 // Load Tasks Form Local Storage and Display Them
 function loadTasks() {
-    const tasks = getTasksFromLocalStorage();
-    tasks.forEach(task => {
-        addTaskToList(task.text, task.completed);
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || []; // Get tasks from localStorage or set empty array
+    tasks.forEach(function(task) {
+        addTaskToList(task.text, task.category, task.completed); // Add each task to the list
     });
 }
